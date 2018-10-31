@@ -108,7 +108,7 @@ SubMatchingList mapMatching(SearchEngineData<Algorithm> &engine_working_data,
             std::transform(candidates_list[t].begin(),
                            candidates_list[t].end(),
                            emission_log_probabilities[t].begin(),
-                           [&](const PhantomNodeWithDistance &candidate) {
+                           [&](const PhantomNode &candidate) {
                                return default_emission_log_probability(candidate.distance);
                            });
         }
@@ -122,20 +122,19 @@ SubMatchingList mapMatching(SearchEngineData<Algorithm> &engine_working_data,
             {
                 map_matching::EmissionLogProbability emission_log_probability(
                     *trace_gps_precision[t]);
-                std::transform(
-                    candidates_list[t].begin(),
-                    candidates_list[t].end(),
-                    emission_log_probabilities[t].begin(),
-                    [&emission_log_probability](const PhantomNodeWithDistance &candidate) {
-                        return emission_log_probability(candidate.distance);
-                    });
+                std::transform(candidates_list[t].begin(),
+                               candidates_list[t].end(),
+                               emission_log_probabilities[t].begin(),
+                               [&emission_log_probability](const PhantomNode &candidate) {
+                                   return emission_log_probability(candidate.distance);
+                               });
             }
             else
             {
                 std::transform(candidates_list[t].begin(),
                                candidates_list[t].end(),
                                emission_log_probabilities[t].begin(),
-                               [&](const PhantomNodeWithDistance &candidate) {
+                               [&](const PhantomNode &candidate) {
                                    return default_emission_log_probability(candidate.distance);
                                });
             }
@@ -237,14 +236,13 @@ SubMatchingList mapMatching(SearchEngineData<Algorithm> &engine_working_data,
                         continue;
                     }
 
-                    double network_distance =
-                        getNetworkDistance(engine_working_data,
-                                           facade,
-                                           forward_heap,
-                                           reverse_heap,
-                                           prev_unbroken_timestamps_list[s].phantom_node,
-                                           current_timestamps_list[s_prime].phantom_node,
-                                           weight_upper_bound);
+                    double network_distance = getNetworkDistance(engine_working_data,
+                                                                 facade,
+                                                                 forward_heap,
+                                                                 reverse_heap,
+                                                                 prev_unbroken_timestamps_list[s],
+                                                                 current_timestamps_list[s_prime],
+                                                                 weight_upper_bound);
 
                     // get distance diff between loc1/2 and locs/s_prime
                     const auto d_t = std::abs(network_distance - haversine_distance);
@@ -410,7 +408,7 @@ SubMatchingList mapMatching(SearchEngineData<Algorithm> &engine_working_data,
             const auto location_index = idx.second;
 
             matching.indices.push_back(timestamp_index);
-            matching.nodes.push_back(candidates_list[timestamp_index][location_index].phantom_node);
+            matching.nodes.push_back(candidates_list[timestamp_index][location_index]);
             auto const routes_count =
                 std::accumulate(model.viterbi_reachable[timestamp_index].begin(),
                                 model.viterbi_reachable[timestamp_index].end(),

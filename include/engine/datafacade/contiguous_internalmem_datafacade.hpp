@@ -309,7 +309,7 @@ class ContiguousInternalMemoryDataFacadeBase : public BaseDataFacade
         return m_geospatial_query->Search(bbox);
     }
 
-    std::vector<PhantomNodeWithDistance>
+    std::vector<PhantomNode>
     NearestPhantomNodesInRange(const util::Coordinate input_coordinate,
                                const float max_distance,
                                const Approach approach) const override final
@@ -320,7 +320,7 @@ class ContiguousInternalMemoryDataFacadeBase : public BaseDataFacade
             input_coordinate, max_distance, approach);
     }
 
-    std::vector<PhantomNodeWithDistance>
+    std::vector<PhantomNode>
     NearestPhantomNodesInRange(const util::Coordinate input_coordinate,
                                const float max_distance,
                                const int bearing,
@@ -333,21 +333,19 @@ class ContiguousInternalMemoryDataFacadeBase : public BaseDataFacade
             input_coordinate, max_distance, bearing, bearing_range, approach);
     }
 
-    std::vector<PhantomNodeWithDistance>
-    NearestPhantomNodes(const util::Coordinate input_coordinate,
-                        const unsigned max_results,
-                        const Approach approach) const override final
+    std::vector<PhantomNode> NearestPhantomNodes(const util::Coordinate input_coordinate,
+                                                 const unsigned max_results,
+                                                 const Approach approach) const override final
     {
         BOOST_ASSERT(m_geospatial_query.get());
 
         return m_geospatial_query->NearestPhantomNodes(input_coordinate, max_results, approach);
     }
 
-    std::vector<PhantomNodeWithDistance>
-    NearestPhantomNodes(const util::Coordinate input_coordinate,
-                        const unsigned max_results,
-                        const double max_distance,
-                        const Approach approach) const override final
+    std::vector<PhantomNode> NearestPhantomNodes(const util::Coordinate input_coordinate,
+                                                 const unsigned max_results,
+                                                 const double max_distance,
+                                                 const Approach approach) const override final
     {
         BOOST_ASSERT(m_geospatial_query.get());
 
@@ -355,12 +353,11 @@ class ContiguousInternalMemoryDataFacadeBase : public BaseDataFacade
             input_coordinate, max_results, max_distance, approach);
     }
 
-    std::vector<PhantomNodeWithDistance>
-    NearestPhantomNodes(const util::Coordinate input_coordinate,
-                        const unsigned max_results,
-                        const int bearing,
-                        const int bearing_range,
-                        const Approach approach) const override final
+    std::vector<PhantomNode> NearestPhantomNodes(const util::Coordinate input_coordinate,
+                                                 const unsigned max_results,
+                                                 const int bearing,
+                                                 const int bearing_range,
+                                                 const Approach approach) const override final
     {
         BOOST_ASSERT(m_geospatial_query.get());
 
@@ -368,13 +365,12 @@ class ContiguousInternalMemoryDataFacadeBase : public BaseDataFacade
             input_coordinate, max_results, bearing, bearing_range, approach);
     }
 
-    std::vector<PhantomNodeWithDistance>
-    NearestPhantomNodes(const util::Coordinate input_coordinate,
-                        const unsigned max_results,
-                        const double max_distance,
-                        const int bearing,
-                        const int bearing_range,
-                        const Approach approach) const override final
+    std::vector<PhantomNode> NearestPhantomNodes(const util::Coordinate input_coordinate,
+                                                 const unsigned max_results,
+                                                 const double max_distance,
+                                                 const int bearing,
+                                                 const int bearing_range,
+                                                 const Approach approach) const override final
     {
         BOOST_ASSERT(m_geospatial_query.get());
 

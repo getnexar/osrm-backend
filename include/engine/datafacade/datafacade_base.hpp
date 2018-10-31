@@ -121,39 +121,35 @@ class BaseDataFacade
     virtual std::vector<RTreeLeaf> GetEdgesInBox(const util::Coordinate south_west,
                                                  const util::Coordinate north_east) const = 0;
 
-    virtual std::vector<PhantomNodeWithDistance>
+    virtual std::vector<PhantomNode>
     NearestPhantomNodesInRange(const util::Coordinate input_coordinate,
                                const float max_distance,
                                const int bearing,
                                const int bearing_range,
                                const Approach approach) const = 0;
-    virtual std::vector<PhantomNodeWithDistance>
+    virtual std::vector<PhantomNode>
     NearestPhantomNodesInRange(const util::Coordinate input_coordinate,
                                const float max_distance,
                                const Approach approach) const = 0;
 
-    virtual std::vector<PhantomNodeWithDistance>
-    NearestPhantomNodes(const util::Coordinate input_coordinate,
-                        const unsigned max_results,
-                        const double max_distance,
-                        const int bearing,
-                        const int bearing_range,
-                        const Approach approach) const = 0;
-    virtual std::vector<PhantomNodeWithDistance>
-    NearestPhantomNodes(const util::Coordinate input_coordinate,
-                        const unsigned max_results,
-                        const int bearing,
-                        const int bearing_range,
-                        const Approach approach) const = 0;
-    virtual std::vector<PhantomNodeWithDistance>
-    NearestPhantomNodes(const util::Coordinate input_coordinate,
-                        const unsigned max_results,
-                        const Approach approach) const = 0;
-    virtual std::vector<PhantomNodeWithDistance>
-    NearestPhantomNodes(const util::Coordinate input_coordinate,
-                        const unsigned max_results,
-                        const double max_distance,
-                        const Approach approach) const = 0;
+    virtual std::vector<PhantomNode> NearestPhantomNodes(const util::Coordinate input_coordinate,
+                                                         const unsigned max_results,
+                                                         const double max_distance,
+                                                         const int bearing,
+                                                         const int bearing_range,
+                                                         const Approach approach) const = 0;
+    virtual std::vector<PhantomNode> NearestPhantomNodes(const util::Coordinate input_coordinate,
+                                                         const unsigned max_results,
+                                                         const int bearing,
+                                                         const int bearing_range,
+                                                         const Approach approach) const = 0;
+    virtual std::vector<PhantomNode> NearestPhantomNodes(const util::Coordinate input_coordinate,
+                                                         const unsigned max_results,
+                                                         const Approach approach) const = 0;
+    virtual std::vector<PhantomNode> NearestPhantomNodes(const util::Coordinate input_coordinate,
+                                                         const unsigned max_results,
+                                                         const double max_distance,
+                                                         const Approach approach) const = 0;
 
     virtual std::pair<PhantomNode, PhantomNode>
     NearestPhantomNodeWithAlternativeFromBigComponent(const util::Coordinate input_coordinate,

@@ -135,13 +135,12 @@ class BasePlugin
     }
 
     // Falls back to default_radius for non-set radii
-    std::vector<std::vector<PhantomNodeWithDistance>>
+    std::vector<std::vector<PhantomNode>>
     GetPhantomNodesInRange(const datafacade::BaseDataFacade &facade,
                            const api::BaseParameters &parameters,
                            const std::vector<double> radiuses) const
     {
-        std::vector<std::vector<PhantomNodeWithDistance>> phantom_nodes(
-            parameters.coordinates.size());
+        std::vector<std::vector<PhantomNode>> phantom_nodes(parameters.coordinates.size());
         BOOST_ASSERT(radiuses.size() == parameters.coordinates.size());
 
         const bool use_hints = !parameters.hints.empty();
@@ -157,11 +156,7 @@ class BasePlugin
             if (use_hints && parameters.hints[i] &&
                 parameters.hints[i]->IsValid(parameters.coordinates[i], facade))
             {
-                phantom_nodes[i].push_back(PhantomNodeWithDistance{
-                    parameters.hints[i]->phantom,
-                    util::coordinate_calculation::haversineDistance(
-                        parameters.coordinates[i], parameters.hints[i]->phantom.location),
-                });
+                phantom_nodes[i].push_back(parameters.hints[i]->phantom);
                 continue;
             }
             if (use_bearings && parameters.bearings[i])
@@ -183,13 +178,11 @@ class BasePlugin
         return phantom_nodes;
     }
 
-    std::vector<std::vector<PhantomNodeWithDistance>>
-    GetPhantomNodes(const datafacade::BaseDataFacade &facade,
-                    const api::BaseParameters &parameters,
-                    unsigned number_of_results) const
+    std::vector<std::vector<PhantomNode>> GetPhantomNodes(const datafacade::BaseDataFacade &facade,
+                                                          const api::BaseParameters &parameters,
+                                                          unsigned number_of_results) const
     {
-        std::vector<std::vector<PhantomNodeWithDistance>> phantom_nodes(
-            parameters.coordinates.size());
+        std::vector<std::vector<PhantomNode>> phantom_nodes(parameters.coordinates.size());
 
         const bool use_hints = !parameters.hints.empty();
         const bool use_bearings = !parameters.bearings.empty();
@@ -206,11 +199,7 @@ class BasePlugin
             if (use_hints && parameters.hints[i] &&
                 parameters.hints[i]->IsValid(parameters.coordinates[i], facade))
             {
-                phantom_nodes[i].push_back(PhantomNodeWithDistance{
-                    parameters.hints[i]->phantom,
-                    util::coordinate_calculation::haversineDistance(
-                        parameters.coordinates[i], parameters.hints[i]->phantom.location),
-                });
+                phantom_nodes[i].push_back(parameters.hints[i]->phantom);
                 continue;
             }
 

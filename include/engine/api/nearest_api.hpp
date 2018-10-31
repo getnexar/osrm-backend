@@ -26,7 +26,7 @@ class NearestAPI final : public BaseAPI
     {
     }
 
-    void MakeResponse(const std::vector<std::vector<PhantomNodeWithDistance>> &phantom_nodes,
+    void MakeResponse(const std::vector<std::vector<PhantomNode>> &phantom_nodes,
                       util::json::Object &response) const
     {
         BOOST_ASSERT(phantom_nodes.size() == 1);
@@ -38,10 +38,8 @@ class NearestAPI final : public BaseAPI
             phantom_nodes.front().begin(),
             phantom_nodes.front().end(),
             waypoints.values.begin(),
-            [this](const PhantomNodeWithDistance &phantom_with_distance) {
-                auto &phantom_node = phantom_with_distance.phantom_node;
+            [this](const PhantomNode &phantom_node) {
                 auto waypoint = MakeWaypoint(phantom_node);
-                waypoint.values["distance"] = phantom_with_distance.distance;
 
                 util::json::Array nodes;
 

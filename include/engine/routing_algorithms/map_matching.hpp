@@ -15,7 +15,7 @@ namespace engine
 namespace routing_algorithms
 {
 
-using CandidateList = std::vector<PhantomNodeWithDistance>;
+using CandidateList = std::vector<PhantomNode>;
 using CandidateLists = std::vector<CandidateList>;
 using SubMatchingList = std::vector<map_matching::SubMatching>;
 static const constexpr double DEFAULT_GPS_PRECISION = 5;

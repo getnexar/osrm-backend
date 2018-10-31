@@ -50,10 +50,9 @@ template <typename RTreeT, typename DataFacadeT> class GeospatialQuery
 
     // Returns nearest PhantomNodes in the given bearing range within max_distance.
     // Does not filter by small/big component!
-    std::vector<PhantomNodeWithDistance>
-    NearestPhantomNodesInRange(const util::Coordinate input_coordinate,
-                               const double max_distance,
-                               const Approach approach) const
+    std::vector<PhantomNode> NearestPhantomNodesInRange(const util::Coordinate input_coordinate,
+                                                        const double max_distance,
+                                                        const Approach approach) const
     {
         auto results = rtree.Nearest(
             input_coordinate,
@@ -71,12 +70,11 @@ template <typename RTreeT, typename DataFacadeT> class GeospatialQuery
 
     // Returns nearest PhantomNodes in the given bearing range within max_distance.
     // Does not filter by small/big component!
-    std::vector<PhantomNodeWithDistance>
-    NearestPhantomNodesInRange(const util::Coordinate input_coordinate,
-                               const double max_distance,
-                               const int bearing,
-                               const int bearing_range,
-                               const Approach approach) const
+    std::vector<PhantomNode> NearestPhantomNodesInRange(const util::Coordinate input_coordinate,
+                                                        const double max_distance,
+                                                        const int bearing,
+                                                        const int bearing_range,
+                                                        const Approach approach) const
     {
         auto results = rtree.Nearest(
             input_coordinate,
@@ -99,12 +97,11 @@ template <typename RTreeT, typename DataFacadeT> class GeospatialQuery
 
     // Returns max_results nearest PhantomNodes in the given bearing range.
     // Does not filter by small/big component!
-    std::vector<PhantomNodeWithDistance>
-    NearestPhantomNodes(const util::Coordinate input_coordinate,
-                        const unsigned max_results,
-                        const int bearing,
-                        const int bearing_range,
-                        const Approach approach) const
+    std::vector<PhantomNode> NearestPhantomNodes(const util::Coordinate input_coordinate,
+                                                 const unsigned max_results,
+                                                 const int bearing,
+                                                 const int bearing_range,
+                                                 const Approach approach) const
     {
         auto results = rtree.Nearest(
             input_coordinate,
@@ -126,13 +123,12 @@ template <typename RTreeT, typename DataFacadeT> class GeospatialQuery
     // Returns max_results nearest PhantomNodes in the given bearing range within the maximum
     // distance.
     // Does not filter by small/big component!
-    std::vector<PhantomNodeWithDistance>
-    NearestPhantomNodes(const util::Coordinate input_coordinate,
-                        const unsigned max_results,
-                        const double max_distance,
-                        const int bearing,
-                        const int bearing_range,
-                        const Approach approach) const
+    std::vector<PhantomNode> NearestPhantomNodes(const util::Coordinate input_coordinate,
+                                                 const unsigned max_results,
+                                                 const double max_distance,
+                                                 const int bearing,
+                                                 const int bearing_range,
+                                                 const Approach approach) const
     {
         auto results = rtree.Nearest(
             input_coordinate,
@@ -155,10 +151,9 @@ template <typename RTreeT, typename DataFacadeT> class GeospatialQuery
 
     // Returns max_results nearest PhantomNodes.
     // Does not filter by small/big component!
-    std::vector<PhantomNodeWithDistance>
-    NearestPhantomNodes(const util::Coordinate input_coordinate,
-                        const unsigned max_results,
-                        const Approach approach) const
+    std::vector<PhantomNode> NearestPhantomNodes(const util::Coordinate input_coordinate,
+                                                 const unsigned max_results,
+                                                 const Approach approach) const
     {
         auto results = rtree.Nearest(
             input_coordinate,
@@ -175,11 +170,10 @@ template <typename RTreeT, typename DataFacadeT> class GeospatialQuery
 
     // Returns max_results nearest PhantomNodes in the given max distance.
     // Does not filter by small/big component!
-    std::vector<PhantomNodeWithDistance>
-    NearestPhantomNodes(const util::Coordinate input_coordinate,
-                        const unsigned max_results,
-                        const double max_distance,
-                        const Approach approach) const
+    std::vector<PhantomNode> NearestPhantomNodes(const util::Coordinate input_coordinate,
+                                                 const unsigned max_results,
+                                                 const double max_distance,
+                                                 const Approach approach) const
     {
         auto results = rtree.Nearest(
             input_coordinate,
@@ -239,8 +233,8 @@ template <typename RTreeT, typename DataFacadeT> class GeospatialQuery
         }
 
         BOOST_ASSERT(results.size() == 1 || results.size() == 2);
-        return std::make_pair(MakePhantomNode(input_coordinate, results.front()).phantom_node,
-                              MakePhantomNode(input_coordinate, results.back()).phantom_node);
+        return std::make_pair(MakePhantomNode(input_coordinate, results.front()),
+                              MakePhantomNode(input_coordinate, results.back()));
     }
 
     // Returns the nearest phantom node. If this phantom node is not from a big component
@@ -284,8 +278,8 @@ template <typename RTreeT, typename DataFacadeT> class GeospatialQuery
         }
 
         BOOST_ASSERT(results.size() == 1 || results.size() == 2);
-        return std::make_pair(MakePhantomNode(input_coordinate, results.front()).phantom_node,
-                              MakePhantomNode(input_coordinate, results.back()).phantom_node);
+        return std::make_pair(MakePhantomNode(input_coordinate, results.front()),
+                              MakePhantomNode(input_coordinate, results.back()));
     }
 
     // Returns the nearest phantom node. If this phantom node is not from a big component
@@ -341,8 +335,8 @@ template <typename RTreeT, typename DataFacadeT> class GeospatialQuery
         }
 
         BOOST_ASSERT(results.size() > 0);
-        return std::make_pair(MakePhantomNode(input_coordinate, results.front()).phantom_node,
-                              MakePhantomNode(input_coordinate, results.back()).phantom_node);
+        return std::make_pair(MakePhantomNode(input_coordinate, results.front()),
+                              MakePhantomNode(input_coordinate, results.back()));
     }
 
     // Returns the nearest phantom node. If this phantom node is not from a big component
@@ -401,16 +395,15 @@ template <typename RTreeT, typename DataFacadeT> class GeospatialQuery
         }
 
         BOOST_ASSERT(results.size() > 0);
-        return std::make_pair(MakePhantomNode(input_coordinate, results.front()).phantom_node,
-                              MakePhantomNode(input_coordinate, results.back()).phantom_node);
+        return std::make_pair(MakePhantomNode(input_coordinate, results.front()),
+                              MakePhantomNode(input_coordinate, results.back()));
     }
 
   private:
-    std::vector<PhantomNodeWithDistance>
-    MakePhantomNodes(const util::Coordinate input_coordinate,
-                     const std::vector<EdgeData> &results) const
+    std::vector<PhantomNode> MakePhantomNodes(const util::Coordinate input_coordinate,
+                                              const std::vector<EdgeData> &results) const
     {
-        std::vector<PhantomNodeWithDistance> distance_and_phantoms(results.size());
+        std::vector<PhantomNode> distance_and_phantoms(results.size());
         std::transform(results.begin(),
                        results.end(),
                        distance_and_phantoms.begin(),
@@ -420,8 +413,7 @@ template <typename RTreeT, typename DataFacadeT> class GeospatialQuery
         return distance_and_phantoms;
     }
 
-    PhantomNodeWithDistance MakePhantomNode(const util::Coordinate input_coordinate,
-                                            const EdgeData &data) const
+    PhantomNode MakePhantomNode(const util::Coordinate input_coordinate, const EdgeData &data) const
     {
         util::Coordinate point_on_segment;
         double ratio;
@@ -532,7 +524,7 @@ template <typename RTreeT, typename DataFacadeT> class GeospatialQuery
         bool is_reverse_valid_target = areSegmentsValid(
             reverse_weights.begin(), reverse_weights.end() - data.fwd_segment_position);
 
-        auto transformed = PhantomNodeWithDistance{
+        auto transformed =
             PhantomNode{data,
                         component_id,
                         forward_weight,
@@ -554,8 +546,8 @@ template <typename RTreeT, typename DataFacadeT> class GeospatialQuery
                         point_on_segment,
                         input_coordinate,
                         static_cast<unsigned short>(util::coordinate_calculation::bearing(
-                            coordinates[data.u], coordinates[data.v]))},
-            current_perpendicular_distance};
+                            coordinates[data.u], coordinates[data.v])),
+                        current_perpendicular_distance};
 
         return transformed;
     }

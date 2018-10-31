@@ -52,7 +52,7 @@ struct PhantomNode
           forward_duration(MAXIMAL_EDGE_DURATION), reverse_duration(MAXIMAL_EDGE_DURATION),
           forward_duration_offset(0), reverse_duration_offset(0), fwd_segment_position(0),
           is_valid_forward_source{false}, is_valid_forward_target{false},
-          is_valid_reverse_source{false}, is_valid_reverse_target{false}, bearing(0)
+          is_valid_reverse_source{false}, is_valid_reverse_target{false}, bearing(0), distance(0)
 
     {
     }
@@ -173,7 +173,8 @@ struct PhantomNode
                          bool is_valid_reverse_target,
                          const util::Coordinate location,
                          const util::Coordinate input_location,
-                         const unsigned short bearing)
+                         const unsigned short bearing,
+                         const double distance)
         : forward_segment_id{other.forward_segment_id},
           reverse_segment_id{other.reverse_segment_id}, forward_weight{forward_weight},
           reverse_weight{reverse_weight}, forward_weight_offset{forward_weight_offset},
@@ -187,7 +188,7 @@ struct PhantomNode
           is_valid_forward_source{is_valid_forward_source},
           is_valid_forward_target{is_valid_forward_target},
           is_valid_reverse_source{is_valid_reverse_source},
-          is_valid_reverse_target{is_valid_reverse_target}, bearing{bearing}
+          is_valid_reverse_target{is_valid_reverse_target}, bearing{bearing}, distance{distance}
     {
     }
 
@@ -210,6 +211,7 @@ struct PhantomNode
     util::Coordinate location; // this is the coordinate of x
     util::Coordinate input_location;
     unsigned short fwd_segment_position;
+
     // is phantom node valid to be used as source or target
   private:
     unsigned short is_valid_forward_source : 1;
@@ -217,17 +219,14 @@ struct PhantomNode
     unsigned short is_valid_reverse_source : 1;
     unsigned short is_valid_reverse_target : 1;
     unsigned short bearing : 12;
-};
 
-static_assert(sizeof(PhantomNode) == 80, "PhantomNode has more padding then expected");
-
-using PhantomNodePair = std::pair<PhantomNode, PhantomNode>;
-
-struct PhantomNodeWithDistance
-{
-    PhantomNode phantom_node;
+  public:
     double distance;
 };
+
+static_assert(sizeof(PhantomNode) == 88, "PhantomNode has more padding then expected");
+
+using PhantomNodePair = std::pair<PhantomNode, PhantomNode>;
 
 struct PhantomNodes
 {

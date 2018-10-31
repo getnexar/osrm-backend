@@ -59,26 +59,20 @@ void filterCandidates(const std::vector<util::Coordinate> &coordinates,
         // sort by forward id, then by reverse id and then by distance
         std::sort(candidates.begin(),
                   candidates.end(),
-                  [](const PhantomNodeWithDistance &lhs, const PhantomNodeWithDistance &rhs) {
-                      return lhs.phantom_node.forward_segment_id.id <
-                                 rhs.phantom_node.forward_segment_id.id ||
-                             (lhs.phantom_node.forward_segment_id.id ==
-                                  rhs.phantom_node.forward_segment_id.id &&
-                              (lhs.phantom_node.reverse_segment_id.id <
-                                   rhs.phantom_node.reverse_segment_id.id ||
-                               (lhs.phantom_node.reverse_segment_id.id ==
-                                    rhs.phantom_node.reverse_segment_id.id &&
+                  [](const PhantomNode &lhs, const PhantomNode &rhs) {
+                      return lhs.forward_segment_id.id < rhs.forward_segment_id.id ||
+                             (lhs.forward_segment_id.id == rhs.forward_segment_id.id &&
+                              (lhs.reverse_segment_id.id < rhs.reverse_segment_id.id ||
+                               (lhs.reverse_segment_id.id == rhs.reverse_segment_id.id &&
                                 lhs.distance < rhs.distance)));
                   });
 
         auto new_end =
             std::unique(candidates.begin(),
                         candidates.end(),
-                        [](const PhantomNodeWithDistance &lhs, const PhantomNodeWithDistance &rhs) {
-                            return lhs.phantom_node.forward_segment_id.id ==
-                                       rhs.phantom_node.forward_segment_id.id &&
-                                   lhs.phantom_node.reverse_segment_id.id ==
-                                       rhs.phantom_node.reverse_segment_id.id;
+                        [](const PhantomNode &lhs, const PhantomNode &rhs) {
+                            return lhs.forward_segment_id.id == rhs.forward_segment_id.id &&
+                                   lhs.reverse_segment_id.id == rhs.reverse_segment_id.id;
                         });
         candidates.resize(new_end - candidates.begin());
 
@@ -88,15 +82,14 @@ void filterCandidates(const std::vector<util::Coordinate> &coordinates,
             for (const auto i : util::irange<std::size_t>(0, compact_size))
             {
                 // Split edge if it is bidirectional and append reverse direction to end of list
-                if (candidates[i].phantom_node.forward_segment_id.enabled &&
-                    candidates[i].phantom_node.reverse_segment_id.enabled)
+                if (candidates[i].forward_segment_id.enabled &&
+                    candidates[i].reverse_segment_id.enabled)
                 {
-                    PhantomNode reverse_node(candidates[i].phantom_node);
+                    PhantomNode reverse_node(candidates[i]);
                     reverse_node.forward_segment_id.enabled = false;
-                    candidates.push_back(
-                        PhantomNodeWithDistance{reverse_node, candidates[i].distance});
+                    candidates.push_back(reverse_node);
 
-                    candidates[i].phantom_node.reverse_segment_id.enabled = false;
+                    candidates[i].reverse_segment_id.enabled = false;
                 }
             }
         }
@@ -104,7 +97,7 @@ void filterCandidates(const std::vector<util::Coordinate> &coordinates,
         // sort by distance to make pruning effective
         std::sort(candidates.begin(),
                   candidates.end(),
-                  [](const PhantomNodeWithDistance &lhs, const PhantomNodeWithDistance &rhs) {
+                  [](const PhantomNode &lhs, const PhantomNode &rhs) {
                       return lhs.distance < rhs.distance;
                   });
     }
@@ -218,9 +211,7 @@ Status MatchPlugin::HandleRequest(const RoutingAlgorithmsInterface &algorithms,
     filterCandidates(tidied.parameters.coordinates, candidates_lists);
     if (std::all_of(candidates_lists.begin(),
                     candidates_lists.end(),
-                    [](const std::vector<PhantomNodeWithDistance> &candidates) {
-                        return candidates.empty();
-                    }))
+                    [](const std::vector<PhantomNode> &candidates) { return candidates.empty(); }))
     {
         return Error("NoSegment",
                      std::string("Could not find a matching segment for any coordinate."),
