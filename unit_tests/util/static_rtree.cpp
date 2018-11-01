@@ -380,8 +380,8 @@ BOOST_AUTO_TEST_CASE(bearing_tests)
     {
         auto results = query.NearestPhantomNodes(input, 5, osrm::engine::Approach::UNRESTRICTED);
         BOOST_CHECK_EQUAL(results.size(), 2);
-        BOOST_CHECK_EQUAL(results.back().phantom_node.forward_segment_id.id, 0);
-        BOOST_CHECK_EQUAL(results.back().phantom_node.reverse_segment_id.id, 1);
+        BOOST_CHECK_EQUAL(results.back().forward_segment_id.id, 0);
+        BOOST_CHECK_EQUAL(results.back().reverse_segment_id.id, 1);
     }
 
     {
@@ -395,13 +395,13 @@ BOOST_AUTO_TEST_CASE(bearing_tests)
             query.NearestPhantomNodes(input, 5, 45, 10, osrm::engine::Approach::UNRESTRICTED);
         BOOST_CHECK_EQUAL(results.size(), 2);
 
-        BOOST_CHECK(results[0].phantom_node.forward_segment_id.enabled);
-        BOOST_CHECK(!results[0].phantom_node.reverse_segment_id.enabled);
-        BOOST_CHECK_EQUAL(results[0].phantom_node.forward_segment_id.id, 1);
+        BOOST_CHECK(results[0].forward_segment_id.enabled);
+        BOOST_CHECK(!results[0].reverse_segment_id.enabled);
+        BOOST_CHECK_EQUAL(results[0].forward_segment_id.id, 1);
 
-        BOOST_CHECK(!results[1].phantom_node.forward_segment_id.enabled);
-        BOOST_CHECK(results[1].phantom_node.reverse_segment_id.enabled);
-        BOOST_CHECK_EQUAL(results[1].phantom_node.reverse_segment_id.id, 1);
+        BOOST_CHECK(!results[1].forward_segment_id.enabled);
+        BOOST_CHECK(results[1].reverse_segment_id.enabled);
+        BOOST_CHECK_EQUAL(results[1].reverse_segment_id.id, 1);
     }
 
     {
@@ -421,13 +421,13 @@ BOOST_AUTO_TEST_CASE(bearing_tests)
             input, 11000, 45, 10, osrm::engine::Approach::UNRESTRICTED);
         BOOST_CHECK_EQUAL(results.size(), 2);
 
-        BOOST_CHECK(results[0].phantom_node.forward_segment_id.enabled);
-        BOOST_CHECK(!results[0].phantom_node.reverse_segment_id.enabled);
-        BOOST_CHECK_EQUAL(results[0].phantom_node.forward_segment_id.id, 1);
+        BOOST_CHECK(results[0].forward_segment_id.enabled);
+        BOOST_CHECK(!results[0].reverse_segment_id.enabled);
+        BOOST_CHECK_EQUAL(results[0].forward_segment_id.id, 1);
 
-        BOOST_CHECK(!results[1].phantom_node.forward_segment_id.enabled);
-        BOOST_CHECK(results[1].phantom_node.reverse_segment_id.enabled);
-        BOOST_CHECK_EQUAL(results[1].phantom_node.reverse_segment_id.id, 1);
+        BOOST_CHECK(!results[1].forward_segment_id.enabled);
+        BOOST_CHECK(results[1].reverse_segment_id.enabled);
+        BOOST_CHECK_EQUAL(results[1].reverse_segment_id.id, 1);
     }
 }
 

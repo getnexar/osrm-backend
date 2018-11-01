@@ -108,7 +108,7 @@ class MockBaseDataFacade : public engine::datafacade::BaseDataFacade
         return {};
     }
 
-    std::vector<engine::PhantomNodeWithDistance>
+    std::vector<engine::PhantomNode>
     NearestPhantomNodesInRange(const util::Coordinate /*input_coordinate*/,
                                const float /*max_distance*/,
                                const int /*bearing*/,
@@ -118,7 +118,7 @@ class MockBaseDataFacade : public engine::datafacade::BaseDataFacade
         return {};
     }
 
-    std::vector<engine::PhantomNodeWithDistance>
+    std::vector<engine::PhantomNode>
     NearestPhantomNodesInRange(const util::Coordinate /*input_coordinate*/,
                                const float /*max_distance*/,
                                const engine::Approach /*approach*/) const override
@@ -126,7 +126,7 @@ class MockBaseDataFacade : public engine::datafacade::BaseDataFacade
         return {};
     }
 
-    std::vector<engine::PhantomNodeWithDistance>
+    std::vector<engine::PhantomNode>
     NearestPhantomNodes(const util::Coordinate /*input_coordinate*/,
                         const unsigned /*max_results*/,
                         const double /*max_distance*/,
@@ -137,7 +137,7 @@ class MockBaseDataFacade : public engine::datafacade::BaseDataFacade
         return {};
     }
 
-    std::vector<engine::PhantomNodeWithDistance>
+    std::vector<engine::PhantomNode>
     NearestPhantomNodes(const util::Coordinate /*input_coordinate*/,
                         const unsigned /*max_results*/,
                         const int /*bearing*/,
@@ -147,7 +147,7 @@ class MockBaseDataFacade : public engine::datafacade::BaseDataFacade
         return {};
     }
 
-    std::vector<engine::PhantomNodeWithDistance>
+    std::vector<engine::PhantomNode>
     NearestPhantomNodes(const util::Coordinate /*input_coordinate*/,
                         const unsigned /*max_results*/,
                         const engine::Approach /*approach*/) const override
@@ -155,7 +155,7 @@ class MockBaseDataFacade : public engine::datafacade::BaseDataFacade
         return {};
     }
 
-    std::vector<engine::PhantomNodeWithDistance>
+    std::vector<engine::PhantomNode>
     NearestPhantomNodes(const util::Coordinate /*input_coordinate*/,
                         const unsigned /*max_results*/,
                         const double /*max_distance*/,

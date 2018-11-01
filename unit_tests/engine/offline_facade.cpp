@@ -224,58 +224,52 @@ class ContiguousInternalMemoryDataFacade<routing_algorithms::offline::Algorithm>
         return {};
     }
 
-    std::vector<PhantomNodeWithDistance>
-    NearestPhantomNodesInRange(const util::Coordinate /*input_coordinate*/,
-                               const float /*max_distance*/,
-                               const int /*bearing*/,
-                               const int /*bearing_range*/,
-                               const Approach /*approach*/) const override
+    std::vector<PhantomNode> NearestPhantomNodesInRange(const util::Coordinate /*input_coordinate*/,
+                                                        const float /*max_distance*/,
+                                                        const int /*bearing*/,
+                                                        const int /*bearing_range*/,
+                                                        const Approach /*approach*/) const override
     {
         return {};
     }
 
-    std::vector<PhantomNodeWithDistance>
-    NearestPhantomNodesInRange(const util::Coordinate /*input_coordinate*/,
-                               const float /*max_distance*/,
-                               const Approach /*approach*/) const override
+    std::vector<PhantomNode> NearestPhantomNodesInRange(const util::Coordinate /*input_coordinate*/,
+                                                        const float /*max_distance*/,
+                                                        const Approach /*approach*/) const override
     {
         return {};
     }
 
-    std::vector<PhantomNodeWithDistance>
-    NearestPhantomNodes(const util::Coordinate /*input_coordinate*/,
-                        const unsigned /*max_results*/,
-                        const double /*max_distance*/,
-                        const int /*bearing*/,
-                        const int /*bearing_range*/,
-                        const Approach /*approach*/) const override
+    std::vector<PhantomNode> NearestPhantomNodes(const util::Coordinate /*input_coordinate*/,
+                                                 const unsigned /*max_results*/,
+                                                 const double /*max_distance*/,
+                                                 const int /*bearing*/,
+                                                 const int /*bearing_range*/,
+                                                 const Approach /*approach*/) const override
     {
         return {};
     }
 
-    std::vector<PhantomNodeWithDistance>
-    NearestPhantomNodes(const util::Coordinate /*input_coordinate*/,
-                        const unsigned /*max_results*/,
-                        const int /*bearing*/,
-                        const int /*bearing_range*/,
-                        const Approach /*approach*/) const override
+    std::vector<PhantomNode> NearestPhantomNodes(const util::Coordinate /*input_coordinate*/,
+                                                 const unsigned /*max_results*/,
+                                                 const int /*bearing*/,
+                                                 const int /*bearing_range*/,
+                                                 const Approach /*approach*/) const override
     {
         return {};
     }
 
-    std::vector<PhantomNodeWithDistance>
-    NearestPhantomNodes(const util::Coordinate /*input_coordinate*/,
-                        const unsigned /*max_results*/,
-                        const Approach /*approach*/) const override
+    std::vector<PhantomNode> NearestPhantomNodes(const util::Coordinate /*input_coordinate*/,
+                                                 const unsigned /*max_results*/,
+                                                 const Approach /*approach*/) const override
     {
         return {};
     }
 
-    std::vector<PhantomNodeWithDistance>
-    NearestPhantomNodes(const util::Coordinate /*input_coordinate*/,
-                        const unsigned /*max_results*/,
-                        const double /*max_distance*/,
-                        const Approach /*approach*/) const override
+    std::vector<PhantomNode> NearestPhantomNodes(const util::Coordinate /*input_coordinate*/,
+                                                 const unsigned /*max_results*/,
+                                                 const double /*max_distance*/,
+                                                 const Approach /*approach*/) const override
     {
         return {};
     }
